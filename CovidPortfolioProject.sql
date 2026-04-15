@@ -48,7 +48,7 @@ ORDER BY 1, 2
 
 
 
---Looking for our country deaths and cases (practice)
+--Looking for our country deaths and cases --- 7
 SELECT YEAR(date) AS Year, SUM(total_cases) AS CasesInYear, SUM(total_deaths) AS DeathInYear, MAX(population),
 SUM(SUM(total_cases)) OVER () AS GrandTotalCases,
 SUM(SUM(total_deaths)) OVER () AS GrandTotalDeaths,
@@ -67,7 +67,7 @@ FROM [Portfolio Project]..covidDeaths$ dea
 JOIN [Portfolio Project]..covidVaccine$ vacc
 ON dea.location = vacc.location AND dea.date = vacc.date
 
---Looking population vs vaccination
+--Looking population vs vaccination  --- 8
 SELECT dea.continent, dea.location, dea.date, dea.population, vacc.new_vaccinations,
 SUM(CAST(vacc.new_vaccinations AS BIGINT)) OVER (Partition BY dea.location ) AS RollingPeopleVaccinated
 FROM [Portfolio Project]..covidDeaths$ dea
@@ -76,7 +76,7 @@ ON dea.location = vacc.location AND dea.date = vacc.date
 WHERE dea.continent is not NULL
 ORDER BY 1, 2, 3
 
---Use CTE
+--Use CTE   --- 9
 WITH popvsvacc(Continent, Location, Date, Population, New_vaccination, Rolling_People_Vaccinated)
 AS
 (
@@ -92,7 +92,7 @@ SELECT *, ROUND((Rolling_people_Vaccinated / CAST(Population AS FLOAT)) * 100, 3
 FROM popvsvacc
 ORDER BY 1, 2, 3
 
---Temp Table
+--Temp Table   --- 10
 CREATE TABLE #PercentPopulationVaccinated(
 Continent nvarchar(255),
 Location nvarchar(255),
@@ -114,7 +114,7 @@ ORDER BY 1, 2, 3
 
 
 
---Creating View for later data visualization
+--Creating View for later data visualization  --- Final
 
 CREATE VIEW PercentPopulationVaccinated AS
 SELECT dea.continent, dea.location, dea.date, dea.population, vacc.new_vaccinations,
