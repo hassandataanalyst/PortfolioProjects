@@ -71,7 +71,7 @@ OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
 SELECT * FROM [Portfolio Project]..nashvilleHousing
 
 
---- Changing Y and N to Yes and No in SolidAsVacant Field
+--- Changing Y and N to Yes and No in SolidAsVacant Field   --- 4
 
 SELECT DISTINCT(SoldAsVacant), COUNT(SoldAsVacant)
 FROM [Portfolio Project]..nashvilleHousing
@@ -93,7 +93,7 @@ SET SoldAsVacant = CASE
 	ELSE SoldAsVacant
 	END
 
---- Remove Duplicates 
+--- Remove Duplicates --- 5
 WITH RowNumCTE AS (
     SELECT *,
         ROW_NUMBER() OVER (
